@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: roon-server
+  labels:
+    app: roon-server
+spec:
+  selector:
+    matchLabels:
+      app: roon-server
+  template:
+    metadata:
+      labels:
+        app: roon-server
+    spec:
+      volumes:
+        - name: roon-data-volume
+          emptyDir: {}
+      containers:
+        - name: roon-server
+          image: jayz28/roon-server:latest
+          imagePullPolicy: Never
+          command: ["/bin/bash", "/root/RoonServer/start.sh"]
+          ports:
+            - containerPort: 9003
+              protocol: TCP
+            - containerPort: 9100
+              protocol: UDP
+          env:
+            - name: ROON_DATAROOT
+              value: /mnt/roon-data
+
+          volumeMounts:
+            - mountPath: /mnt/roon-data
+              name: roon-data-volume
