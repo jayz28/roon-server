@@ -2,7 +2,7 @@ FROM ubuntu:bionic
 RUN apt update && apt install -y \
     ffmpeg \
     libasound2 \
-    cifs-utils 
+    cifs-utils
 ENV ROON_DATAROOT /mnt/roon-data
 WORKDIR /root
 ADD http://download.roonlabs.com/builds/RoonServer_linuxx64.tar.bz2 .
